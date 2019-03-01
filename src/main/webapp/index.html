@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="layui/css/layui.css">
 
+
     <style type="text/css">
         .ulhx li{
             float: left;
@@ -22,6 +23,8 @@
 <body style="background-color: #f2f2f2">
 <script type="application/javascript" src="js/bootstrap.min.js"></script>
 <script type="application/javascript" src="layui/layui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script type="application/javascript" src="js/jquery-3.3.1.js"></script>
     <div class="container">
         <div class="row" style="height: 50px; background-color: #407380; margin-top: 20px">
             <div class="col-lg-12">
@@ -207,9 +210,25 @@
             </div>
     </div>
 
-    <div>
-        <div class="row" style="margin-top: 20px">
-            <div class="col-lg-3" style="margin-top: 30px;background-color: #f2f2f2">
+    <div >
+        <div id="dvdata" class="row" style="margin-top: 20px">
+            <div class="col-lg-3" style="margin-top: 30px;background-color: #f2f2f2"  v-for="p in obj.data" @click="spdetail(p.id)">
+                <div style="height: 200px">
+                    <div class="row" >
+                        <div class="col-lg-12" style="background-color: #f2f2f2">
+                            <img src="https://img.alicdn.com/tfscom/i3/632610938/O1CN01bw6Xee1Ine0bkxzvr_!!632610938.jpg" width="100%" height="200px"/>
+                        </div>
+                        <div class="col-lg-12" style="background-color: #ffffff;margin-left: 15px;width: 263px">
+                            <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DvNyH%2F9%2B0R7scQipKwQzePOeEDrYVVa64XoO8tOebS%2Bfjf2vlNIV67jp3uvqnJPmNLzKPa%2Ff2nu9CsNV6GWz%2B8VUx8%2BFSzoEaJOkIs%2FRKhrcXp9GJasdwUHEumm%2B6nHzyiM9nxYkhT7uZSW8QS28nh%2BBIIrxx6gpRlw6LmJeOerZ8Qt66ItCAFCg%2F%2BsCdWkBWZaeZ6D2Lsw807daI%2F5irbIt4XNWIP8KZxiXvDf8DaRs%3D" class="good-title" target="_blank">{{p.details}}</a>
+                        </div>
+                        <div style="padding-left: 15px;margin-top: 10px;margin-left: 15px;background-color: #ffffff;width: 263px">
+
+                            <span style="color: red;">￥{{p.price}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           <!-- <div class="col-lg-3" style="margin-top: 30px;background-color: #f2f2f2">
                 <div style="height: 200px">
                     <div class="row" >
                         <div class="col-lg-12" style="background-color: #f2f2f2">
@@ -298,8 +317,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3" style="margin-top: 30px;background-color: #f2f2f2">
+            </div>-->
+            <!--<div class="col-lg-3" style="margin-top: 30px;background-color: #f2f2f2">
                 <div style="height: 200px">
                     <div class="row" >
                         <div class="col-lg-12" style="background-color: #f2f2f2">
@@ -313,22 +332,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3" style="margin-top: 30px;background-color: #f2f2f2">
-                <div style="height: 200px">
-                    <div class="row" >
-                        <div class="col-lg-12" style="background-color: #f2f2f2">
-                            <img src="https://img.alicdn.com/tfscom/i3/632610938/O1CN01bw6Xee1Ine0bkxzvr_!!632610938.jpg" width="100%" height="200px"/>
-                        </div>
-                        <div class="col-lg-12" style="background-color: #ffffff;margin-left: 15px;width: 263px">
-                            <a href="https://s.click.taobao.com/t?e=m%3D2%26s%3DvNyH%2F9%2B0R7scQipKwQzePOeEDrYVVa64XoO8tOebS%2Bfjf2vlNIV67jp3uvqnJPmNLzKPa%2Ff2nu9CsNV6GWz%2B8VUx8%2BFSzoEaJOkIs%2FRKhrcXp9GJasdwUHEumm%2B6nHzyiM9nxYkhT7uZSW8QS28nh%2BBIIrxx6gpRlw6LmJeOerZ8Qt66ItCAFCg%2F%2BsCdWkBWZaeZ6D2Lsw807daI%2F5irbIt4XNWIP8KZxiXvDf8DaRs%3D" class="good-title" target="_blank">全新曲面24英寸液晶显示器22台式电脑显示屏27高清电竞32屏幕ps4</a>
-                        </div>
-                        <div style="padding-left: 15px;margin-top: 10px;margin-left: 15px;background-color: #ffffff;width: 263px">
-                            <span style="color: red;">￥289.00</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </div>-->
 
             <!--分页-->
             <div class="row" >
@@ -347,7 +351,10 @@
 
 
 <script>
-    layui.use('laypage', function(){
+
+
+    var layer;
+    layui.use(['laypage','layer'], function(){
         var laypage = layui.laypage;
 
         //执行一个laypage实例
@@ -356,6 +363,40 @@
             ,count: 1000 //数据总数，从服务端得到
         });
     });
+
+
+
+
+$(function (){
+    $.ajax({
+        url:"selectAllGoods.do",
+        method:"get",
+        success:function (data) {
+            if(data.code == 1){
+                ladate(data.info);
+            }
+        }
+
+    })
+})
+    function ladate(infos) {
+        var appData=new Vue({
+            el:"#dvdata",
+            data:{
+                obj:{
+                   code:0,
+                   data:infos
+                }
+            },
+            methods:{
+                spdetail:function (id) {
+                    layer.msg('你查看商品：id='+id);
+                }
+            }
+        })
+    }
+
+
 </script>
 </body>
 </html>
