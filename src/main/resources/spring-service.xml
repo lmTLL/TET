@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd 
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd 
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--扫描注解的类-->
+    <context:component-scan base-package="com.bjg">
+        
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:exclude-filter>
+    </context:component-scan>
+    <!--事务管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!-- 4配置事务管理类 -->
+    <bean id="txManage" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    <!-- 5配置事务的特性 -->
+    <tx:advice id="txAdvice" transaction-manager="txManage">
+        <tx:attributes>
+            <!-- 针对使用事务的add开头的方法
+            read-only 是否只读，true 是，false 可读可写
+            如果有插入等操作，设为为true，运行程序会报异常-->
+            <tx:method name="add*" read-only="false" propagation="REQUIRED"/>
+            <tx:method name="delete*" read-only="false"  propagation="REQUIRED"/>
+            <tx:method name="update*" read-only="false"  propagation="REQUIRED"/>
+            <tx:method name="find*" read-only="true"  propagation="REQUIRED"/>
+            <!-- 针对其余的方法 -->
+            <tx:method name="*" propagation="NOT_SUPPORTED"/>
+
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- 6 AOP配置 -->
+    <aop:config>
+        <!-- 切入点 -->
+        <aop:pointcut expression="execution(* com.bjg.service.impl.*.*(..))" id="pc"/>
+
+        <!-- 通知 -->
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pc"/>
+
+    </aop:config>
+<!--扫描事务的注解-->
+	<tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
+</beans>

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjg.dao.GoodsMapper">
+  <resultMap id="BaseResultMap" type="com.bjg.entity.Goods">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="goodsname" jdbcType="VARCHAR" property="goodsname" />
+    <result column="picture" jdbcType="VARCHAR" property="picture" />
+    <result column="details" jdbcType="VARCHAR" property="details" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="oprice" jdbcType="DOUBLE" property="oprice" />
+    <result column="linkaddress" jdbcType="VARCHAR" property="linkaddress" />
+    <result column="tradingaddress" jdbcType="VARCHAR" property="tradingaddress" />
+    <result column="tid" jdbcType="INTEGER" property="tid" />
+    <result column="flag" jdbcType="INTEGER" property="flag" />
+  </resultMap>
+
+  <resultMap id="BaseResultMap2" type="com.bjg.vo.GoodsVo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="goodsname" jdbcType="VARCHAR" property="goodsname" />
+    <result column="picture" jdbcType="VARCHAR" property="picture" />
+    <result column="details" jdbcType="VARCHAR" property="details" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="oprice" jdbcType="DOUBLE" property="oprice" />
+    <result column="linkaddress" jdbcType="VARCHAR" property="linkaddress" />
+    <result column="tradingaddress" jdbcType="VARCHAR" property="tradingaddress" />
+    <result column="tid" jdbcType="INTEGER" property="tid" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="flag" jdbcType="INTEGER" property="flag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, goodsname, picture, details, price, oprice, linkaddress, tradingaddress, tid, 
+    flag
+  </sql>
+  <sql id="Base_Column_List2">
+    id, goodsname, picture, details, price, oprice, linkaddress, tradingaddress, tid, type,
+    flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_goods
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_goods
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bjg.entity.Goods">
+    insert into t_goods (id, goodsname, picture, 
+      details, price, oprice, 
+      linkaddress, tradingaddress, tid, 
+      flag)
+    values (#{id,jdbcType=INTEGER}, #{goodsname,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}, 
+      #{details,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, #{oprice,jdbcType=DOUBLE}, 
+      #{linkaddress,jdbcType=VARCHAR}, #{tradingaddress,jdbcType=VARCHAR}, #{tid,jdbcType=INTEGER}, 
+      #{flag,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bjg.entity.Goods">
+    insert into t_goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="goodsname != null">
+        goodsname,
+      </if>
+      <if test="picture != null">
+        picture,
+      </if>
+      <if test="details != null">
+        details,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="oprice != null">
+        oprice,
+      </if>
+      <if test="linkaddress != null">
+        linkaddress,
+      </if>
+      <if test="tradingaddress != null">
+        tradingaddress,
+      </if>
+      <if test="tid != null">
+        tid,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="goodsname != null">
+        #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="picture != null">
+        #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="details != null">
+        #{details,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="oprice != null">
+        #{oprice,jdbcType=DOUBLE},
+      </if>
+      <if test="linkaddress != null">
+        #{linkaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="tradingaddress != null">
+        #{tradingaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="tid != null">
+        #{tid,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bjg.entity.Goods">
+    update t_goods
+    <set>
+      <if test="goodsname != null">
+        goodsname = #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="picture != null">
+        picture = #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="details != null">
+        details = #{details,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="oprice != null">
+        oprice = #{oprice,jdbcType=DOUBLE},
+      </if>
+      <if test="linkaddress != null">
+        linkaddress = #{linkaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="tradingaddress != null">
+        tradingaddress = #{tradingaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="tid != null">
+        tid = #{tid,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bjg.entity.Goods">
+    update t_goods
+    set goodsname = #{goodsname,jdbcType=VARCHAR},
+      picture = #{picture,jdbcType=VARCHAR},
+      details = #{details,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE},
+      oprice = #{oprice,jdbcType=DOUBLE},
+      linkaddress = #{linkaddress,jdbcType=VARCHAR},
+      tradingaddress = #{tradingaddress,jdbcType=VARCHAR},
+      tid = #{tid,jdbcType=INTEGER},
+      flag = #{flag,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="findByLike" parameterType="java.lang.String" resultMap="BaseResultMap2">
+    select
+     g.id, g.goodsname, g.picture, g.details, g.price, g.oprice,
+      g.linkaddress, g.tradingaddress, g.tid, t.type, g.flag
+    from t_goods g
+    inner join t_type t
+    on g.tid=t.id
+    where g.goodsname like #{msg} or t.type like #{msg}
+  </select>
+
+
+</mapper>

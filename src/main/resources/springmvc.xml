@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<!-- 扫描注解
+
+	-->
+	<!-- <context:component-scan base-package="com.qianfeng.controller"></context:component-scan> -->
+
+	<!-- 这是sprinmvc的配置，只需要扫描控制层注解，如果在某些情况下，需要指定扫描某个父包，
+		<context:include-filter 指定扫描哪些注解、
+		还需要设置use-default-filters="false"，否则事务会不起作用
+	 -->
+	<context:component-scan base-package="com.bjg" >
+	<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+
+	<!-- 3 控制器类上使用@Validated注解时，需要增加该配置 -->
+	<bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/>
+
+	<!-- 设置 conversion-service，引入转换器-->
+	<!-- 2 引入验证器配置 -->
+	<mvc:annotation-driven validator="validator">
+		<!-- 处理json里的日期数据，默认日期被fastjson转为时间戳数据 -->
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="objectMapper">
+					<!--  ObjectMapper objectMapper = new ObjectMapper();
+                     objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd")) -->
+					<bean class="com.fasterxml.jackson.databind.ObjectMapper">
+						<property name="dateFormat">
+							<bean class="java.text.SimpleDateFormat">
+								<constructor-arg type="java.lang.String" value="yyyy-MM-dd" />
+							</bean>
+						</property>
+					</bean>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	<!-- 1 验证器配置 -->
+	<!-- 配置资源文件 -->
+	<bean id="hibernateMessages" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="defaultEncoding" value="UTF-8"></property>
+		<property name="basenames">
+			<list>
+				<value>ValidationMessages</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 配置验证器 -->
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="providerClass" value="org.hibernate.validator.HibernateValidator"></property>
+		<property name="validationMessageSource" ref="hibernateMessages"></property>
+	</bean>
+
+	<!-- 文件上传的解析器  id的值不能改-->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 上传文件的最大大小 ，单位字节 ，比如 1024 * 1024 = 1M-->
+		<property name="maxUploadSize" value="1048576"></property>
+
+	</bean>
+
+
+
+	<!--<mvc:interceptors>-->
+		<!-- <mvc:interceptor>
+            <mvc:mapping path="/download/**" />
+            <mvc:mapping path="/upload/**" />
+            <bean class="com.xxxx.interceptor.AuthInterceptor" />
+        </mvc:interceptor> -->
+		<!-- 检查用户权限，对于部分不需要权限的路径进行排除 -->
+		<!--<mvc:interceptor>-->
+			<!--&lt;!&ndash; 先匹配所有路径，然后排除不需要检查的路径 &ndash;&gt;-->
+			<!--<mvc:mapping path="/**" />-->
+			<!--&lt;!&ndash; 与登录相关的请求 &ndash;&gt;-->
+			<!--<mvc:exclude-mapping path="/userlogin.do" />-->
+			<!-- 以下是静态资源 -->
+			<!--<mvc:exclude-mapping path="/img/**" />-->
+			<!--<mvc:exclude-mapping path="/css/**" />-->
+			<!--<mvc:exclude-mapping path="/bootstrap/**" />-->
+			<!--<mvc:exclude-mapping path="/js/**" />-->
+			<!--<mvc:exclude-mapping path="/My97DatePicker/**" />-->
+			<!--<mvc:exclude-mapping path="/ueditorFile/**" />-->
+			<!-- 客户端文件上传下载，不使用该校验 -->
+			<!-- <mvc:exclude-mapping path="/download/**" />
+            <mvc:exclude-mapping path="/upload/**" /> -->
+			<!-- 用户是否已经登录的检查 -->
+			<!--<bean id="loginInterceptor" class="com.pigdao.utils.LoginInterceptor"></bean>-->
+		<!--</mvc:interceptor>-->
+	<!--</mvc:interceptors>-->
+
+	<!-- 视图解析器
+        默认的视图解析器，可以不配置
+     -->
+<!--	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		&lt;!&ndash; 前缀 &ndash;&gt;
+		<property name="prefix" value="/"></property>
+		&lt;!&ndash; 后缀 &ndash;&gt;
+		<property name="suffix" value=".jsp"></property>
+
+	</bean>-->
+
+</beans>
