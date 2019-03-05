@@ -1,6 +1,7 @@
 package com.bjg.service;
 
 import com.bjg.common.JsonBean;
+import com.bjg.entity.Goods;
 
 /**
  * Create with IDEA
@@ -17,5 +18,7 @@ public interface GoodsService {
 
     JsonBean findAllByType(int id);
 
-    JsonBean findLike(String msg);
+    JsonBean findLike(String keyword);
+
+    JsonBean save(Goods goods);
 }

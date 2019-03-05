@@ -21,10 +21,11 @@
     </style>
 </head>
 <body style="background-color: #f2f2f2">
+<script type="application/javascript" src="js/jquery-3.3.1.js"></script>
 <script type="application/javascript" src="js/bootstrap.min.js"></script>
 <script type="application/javascript" src="layui/layui.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-<script type="application/javascript" src="js/jquery-3.3.1.js"></script>
+
     <div class="container">
         <div class="row" style="height: 50px; background-color: #407380; margin-top: 20px">
             <div class="col-lg-12">
@@ -121,7 +122,7 @@
             <div class="col-lg-6" style="padding-bottom: 30px">
                 <div class="input-group" style="margin-top: 20px">
                     <span class="input-group-addon"> <span class="glyphicon glyphicon-search" aria-hidden="true"></span></span>
-                    <input type="text" class="form-control" placeholder="搜索关键词...">
+                    <input type="text" name="keyword" class="form-control" placeholder="搜索关键词...">
                     <span class="input-group-btn">
                         <a href="javascript:onsearch()" class="layui-btn layui-btn-sm layui-btn-normal">查询</a>
 
@@ -251,31 +252,31 @@ $(function (){
             async: false,
             success:function (data) {
                 if(data.code==1){
-                    ladate1(data.info);
+                    ladate(data.info);
                 }
             }
         })
     }
 
+    var appData=new Vue({
+        el:"#dvdata",
+        data:{
+            obj:{
+                code:1,
+                data:[]
+            }
+        },
+        methods:{
+            spdetail:function (id) {
+                layer.msg('你查看商品：id='+id);
 
+            }
+        }
+
+    })
 
     function ladate(infos) {
-        var appData=new Vue({
-            el:"#dvdata",
-            data:{
-                obj:{
-                   code:1,
-                   data:infos
-                }
-            },
-            methods:{
-                spdetail:function (id) {
-                    layer.msg('你查看商品：id='+id);
-
-                }
-                }
-
-        })
+       appData.obj.data=infos;
     }
 
     function ladate1(infos) {

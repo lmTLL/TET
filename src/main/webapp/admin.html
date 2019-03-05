@@ -191,7 +191,7 @@
 
         <div class="row">
             <div  style="margin-top: -500px;margin-left:350px; background-color:#ffffff;width: 750px;height: 500px">
-                <form id="fm" class="layui-form" style="margin-top: 20px" action=""  enctype="multipart/form-data">
+                <form id="fm" class="layui-form" style="margin-top: 20px" method="post" action="/updateInfo.do"  enctype="multipart/form-data">
                     <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
                     <div id="div1" class="layui-form-item" style="padding-top: 30px">
                         <label class="layui-form-label" style="padding-top: 50px;width: 100px">
@@ -216,7 +216,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label" style="width: 100px">个性签名</label>
                         <div class="layui-input-block" style="margin-left: 100px">
-                            <input type="text" name="name" autocomplete="off" class="layui-input" style="">
+                            <input v-model="signature" type="text" name="signature" autocomplete="off" class="layui-input" style="">
                         </div>
                     </div>
 
@@ -231,20 +231,20 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label" style="width: 100px">生日</label>
                         <div class="layui-input-inline" style="margin-left: 0px">
-                            <input type="date" name="birthday" autocomplete="off" class="layui-input" style="">
+                            <input v-model="birthday" type="date" name="birthday" autocomplete="off" class="layui-input" style="">
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label" style="width: 100px">昵称</label>
+                        <label class="layui-form-label" style="width: 100px">手机号</label>
                         <div class="layui-input-inline" style="margin-left: 0px">
-                            <input v-model="name" type="text" name="name" autocomplete="off" class="layui-input" style="">
+                            <input v-model="phone" type="text" name="phone" autocomplete="off" class="layui-input" style="">
 
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label" style="width: 100px">昵称</label>
+                        <label class="layui-form-label" style="width: 100px">QQ</label>
                         <div class="layui-input-inline" style="margin-left: 0px">
-                            <input v-model="name" type="text" name="name" autocomplete="off" class="layui-input" style="">
+                            <input v-model="qq" type="text" name="qq" autocomplete="off" class="layui-input" style="">
 
                         </div>
                     </div>
@@ -252,7 +252,7 @@
 
                     <div class="layui-form-item">
                         <div class="layui-input-block">
-                            <button class="layui-btn" lay-submit lay-filter="*" style="background-color: #407380">立即提交
+                            <button class="layui-btn" lay-submit lay-filter="formDemo" style="background-color: #407380">立即提交
                             </button>
                             <button type="reset" class="layui-btn layui-btn-primary"
                                     style="width: 100px;background-color:#407380;color: white ">重置
@@ -269,13 +269,6 @@
 
 </div>
 
-<script>
-    layui.use('form', function () {
-        var form = layui.form;
-
-//各种基于事件的操作，下面会有进一步介绍
-    });
-</script>
 
 <script>
 
@@ -311,7 +304,7 @@
                             sex:infos.sex,
                             birthday:infos.birthday,
                             phone:infos.phone,
-                            QQ:infos.QQ,
+                            qq:infos.qq,
 
                         }
                     })
@@ -341,6 +334,38 @@
         })
     }*/
 
+
+
+</script>
+
+<script type="text/javascript">
+
+
+
+    //Demo
+    layui.use('form', function() {
+        var form = layui.form;
+        //监听提交
+        form.on('submit(formDemo)', function(data) {
+            layer.msg(JSON.stringify(data.field));
+            sub("fm", function(obj) {
+                if (obj.code == 1) {
+                    alert(obj.info)
+                    location.href = "index.html";
+                } else {
+                    //layer.msg(obj.msg);
+                }
+            })
+        });
+    });
+    var app=new Vue({
+        el: "#fm2",
+        data:{
+            obj:{
+
+            }
+        }
+    });
 
 
 </script>

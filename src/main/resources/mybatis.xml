@@ -4,6 +4,13 @@
 <!-- mybatis主配置文件 -->
 <configuration>
 
+    <!-- </mappers>  -->
+    <settings>
+        <!-- 配置mybatis运行过程中日志输出的技术选型的，mybatis支持多种日志输出，内置STDOUT_LOGGING -->
+        <!-- 配置这个之后，mybatis运行过程中会输出执行的sql语句 -->
+        <setting name="logImpl" value="STDOUT_LOGGING" />
+    </settings>
+
     <!-- 配置别名 -->
     <!-- <typeAliases> type 包名+类型，alias 指定别名 <typeAlias type="com.qianfeng.entity.Employee"
         alias="employee"/> </typeAliases> -->

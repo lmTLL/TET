@@ -168,14 +168,14 @@
       flag = #{flag,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="findByLike" parameterType="java.lang.String" resultMap="BaseResultMap2">
+  <select id="findByLike" parameterType="string" resultMap="BaseResultMap2">
     select
      g.id, g.goodsname, g.picture, g.details, g.price, g.oprice,
       g.linkaddress, g.tradingaddress, g.tid, t.type, g.flag
     from t_goods g
     inner join t_type t
     on g.tid=t.id
-    where g.goodsname like #{msg} or t.type like #{msg}
+    where g.goodsname like #{keyword} or t.type like #{keyword}
   </select>
 
 

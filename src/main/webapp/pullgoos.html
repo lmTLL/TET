@@ -189,7 +189,7 @@
     </div>
 
 **************************************************************************************************************-->
-    <form style="margin-top: 20px" class="layui-form" action="" method="post" enctype="multipart/form-data">
+    <form style="margin-top: 20px" class="layui-form" action="saveGoods.do" method="post" enctype="multipart/form-data">
 
     <div class="publish-main layui-form layui-form-pane">
         <div style="padding-left: 450px">
@@ -209,25 +209,25 @@
         <div class="layui-form-item input-line">
             <label class="layui-form-label">商品名称</label>
             <div class="layui-input-inline" style="width: 390px">
-                <input type="text" name="title" autocomplete="off" placeholder="请输入商品名称" class="layui-input goods-title">
+                <input type="text" name="goodsname" autocomplete="off" placeholder="请输入商品名称" class="layui-input goods-title">
             </div>
             <div class="layui-form-mid layui-word-aux">14个字以内</div>
         </div>
         <div class="layui-form-item layui-form-text input-line">
             <label class="layui-form-label good-description">商品详情</label>
             <div class="layui-input-block">
-                <textarea placeholder="请输入商品详情" class="layui-textarea goods-des"></textarea>
+                <textarea name="details" placeholder="请输入商品详情" class="layui-textarea goods-des"></textarea>
             </div>
         </div>
         <div class="layui-form-item input-line" id="price">
             <label class="layui-form-label">价格</label>
             <div class="layui-input-inline">
-                <input type="text" name="title" autocomplete="off" placeholder="请输入价格" class="layui-input price">
+                <input type="text" name="price" autocomplete="off" placeholder="请输入价格" class="layui-input price">
             </div>
             <div class="layui-form-mid layui-word-aux">元　　　</div>
             <label class="layui-form-label">原价</label>
             <div class="layui-input-inline">
-                <input type="text" name="title" autocomplete="off" placeholder="请输入原价" class="layui-input original-price">
+                <input type="text" name="oprice" autocomplete="off" placeholder="请输入原价" class="layui-input original-price">
             </div>
             <div class="layui-form-mid layui-word-aux">元　　　</div>
             <a href="javascript:" class="add-original-link layui-btn layui-btn-small"><i class="layui-icon" style="color: #fff;">&#xe608;</i> 添加原购买链接</a>
@@ -236,7 +236,7 @@
         <div class="layui-form-item input-line" id="original-link" style="display: none;">
             <label class="layui-form-label">原购买链接</label>
             <div class="layui-input-block">
-                <input type="text" name="title" autocomplete="off" placeholder="请输入原购买链接" class="layui-input original-link">
+                <input type="text" name="linkaddress" autocomplete="off" placeholder="请输入原购买链接" class="layui-input original-link">
             </div>
         </div>
         <div class="layui-form-item input-line">
@@ -268,21 +268,21 @@
         <div class="layui-form-item input-line" id="address">
             <label class="layui-form-label">交易地址</label>
             <div class="layui-input-block">
-                <input type="text" name="title" autocomplete="off" placeholder="请输入交易地址" class="layui-input goods-address">
+                <input type="text" name="tradingaddress" autocomplete="off" placeholder="请输入交易地址" class="layui-input goods-address">
             </div>
         </div>
         <div class="layui-form-item input-line" id="phoneNumber">
             <label class="layui-form-label">手机号</label>
             <div class="layui-input-inline">
-                <input type="text" name="title" autocomplete="off" placeholder="请输入手机号" class="layui-input phone-number" value="18625599285">
+                <input type="text" name="" autocomplete="off" placeholder="请输入手机号" class="layui-input phone-number" >
             </div>
             <label class="layui-form-label">QQ号</label>
             <div class="layui-input-inline">
-                <input type="text" name="title" autocomplete="off" placeholder="请输入QQ号" class="layui-input qq-number">
+                <input type="text" name="" autocomplete="off" placeholder="请输入QQ号" class="layui-input qq-number">
             </div>
             <label class="layui-form-label">微信号</label>
             <div class="layui-input-inline">
-                <input type="text" name="title" autocomplete="off" placeholder="请输入微信号" class="layui-input wx-number">
+                <input type="text" name="" autocomplete="off" placeholder="请输入微信号" class="layui-input wx-number">
             </div>
         </div>
         <!-- <div class="layui-form-item input-line" id="qqNumber">
@@ -319,6 +319,7 @@
             //监听提交
             form.on('submit(formDemo)', function(data){
                 layer.msg(JSON.stringify(data.field));
+                window.location.href="index.html";
                 return false;
             });
         });
